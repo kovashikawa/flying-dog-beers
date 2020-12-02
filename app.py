@@ -117,6 +117,11 @@ app.layout = html.Div([
 ])
 
 
+@app.callback(Output('cytoscape', 'layout'),
+              [Input('dropdown-layout', 'value')])
+def update_cytoscape_layout(layout):
+    return {'name': layout}
+
 @app.callback(Output('cytoscape-update-layout', 'layout'),
               Input('dropdown-update-layout', 'value'))
 def update_layout(layout):
@@ -126,7 +131,7 @@ def update_layout(layout):
     }
 
 @app.callback(Output('tap-node-json-output', 'children'),
-              [Input('cytoscape', 'tapNode')], suppress_callback_exceptions=False)
+              [Input('cytoscape', 'tapNode')])
 def display_tap_node(data):
     return json.dumps(data, indent=2)
 
@@ -135,12 +140,6 @@ def display_tap_node(data):
               [Input('cytoscape', 'tapEdge')])
 def display_tap_edge(data):
     return json.dumps(data, indent=2)
-
-
-@app.callback(Output('cytoscape', 'layout'),
-              [Input('dropdown-layout', 'value')])
-def update_cytoscape_layout(layout):
-    return {'name': layout}
 
 @app.callback(Output('cytoscape', 'stylesheet'),
               [Input('cytoscape', 'tapNode'),
@@ -230,4 +229,4 @@ def generate_stylesheet(node, conn_color, node_shape):
     return stylesheet
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=True, use_reloader=True)
