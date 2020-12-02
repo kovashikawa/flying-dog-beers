@@ -8,7 +8,7 @@ import dash_cytoscape as cyto
 import dash_reusable_components as drc
 
 app = dash.Dash(__name__)
-app.config['suppress_callback_exceptions'] = True
+app.config.suppress_callback_exceptions = True
 app.title = "Food Graphs"
 server = app.server
 
@@ -228,3 +228,6 @@ def generate_stylesheet(node, conn_color, node_shape):
             })
 
     return stylesheet
+
+if __name__ == '__main__':
+    app.run_server(debug=False)
